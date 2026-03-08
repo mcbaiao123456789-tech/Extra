@@ -341,13 +341,16 @@ body{font-family:'Poppins',sans-serif;background:#0d0d0d;color:#fff;overscroll-b
     <div class="sr"><div class="sn">3</div><div class="st">Use a entidade e referência abaixo</div></div>
     <div class="sr"><div class="sn">4</div><div class="st">Envie o comprovativo pelo <strong>WhatsApp</strong></div></div>
     <div class="rbx">
-      <div class="rl">Entidade</div><div class="rv">99999</div>
+      <div class="rl">Entidade</div><div class="rv">10116</div>
       <div style="height:1px;background:rgba(57,255,20,.12);margin:.5rem 0;"></div>
       <div class="rl">Referência de Pagamento</div>
       <div class="rv" id="coRef">--- --- ---</div>
       <div style="height:1px;background:rgba(57,255,20,.12);margin:.5rem 0;"></div>
-      <div class="rl">WhatsApp</div>
-      <div class="rph">📱 +244 923 000 000</div>
+      <div class="rl">Referência Telefone</div>
+      <div class="rph">📱 928 520 748</div>
+      <div style="height:1px;background:rgba(57,255,20,.12);margin:.5rem 0;"></div>
+      <div class="rl">WhatsApp Comprovativo</div>
+      <div class="rph">📱 +244 956 283 108</div>
     </div>
     <div class="sep"></div>
     <label class="fl">👤 Nome Completo</label>
@@ -357,7 +360,7 @@ body{font-family:'Poppins',sans-serif;background:#0d0d0d;color:#fff;overscroll-b
     <label class="fl">🔢 Referência</label>
     <input class="fi2" type="text" id="coRefInp" readonly/>
     <label class="fl">📞 WhatsApp</label>
-    <input class="fi2" type="tel" value="+244 923 000 000" readonly/>
+    <input class="fi2" type="tel" value="+244 956 283 108" readonly/>
     <button class="bwa" onclick="sendWA()">📲 ENVIAR COMPROVATIVO</button>
     <p style="text-align:center;color:#333;font-size:.68rem;margin-top:.5rem;">Será redirecionado para o WhatsApp</p>
   </div>
@@ -380,7 +383,7 @@ var G = {
   done:0, wins:0, totalWon:0,
   isWin:[], prizes:[], finalTotal:0
 };
-var REF = '1' + ('' + Math.floor(Math.random() * 99999999)).padStart(8, '0');
+var REF = '928520748';
 var WSYM = ['💎','⭐','🍀','💰','🏆','🎯','🔔','🌟'];
 var LSYM = ['❌','💀','🚫','😞'];
 var PRIZE_LIST = [18500, 16200, 15800, 19300, 17100, 16550];
@@ -757,7 +760,7 @@ function sendWA() {
     '🔢 Referência: ' + ref + '\n💰 Valor: ' + fmt(G.finalTotal) + '\n\n' +
     '📎 Segue em anexo o comprovativo de pagamento.'
   );
-  window.open('https://wa.me/244923000000?text=' + msg, '_blank');
+  window.open('https://wa.me/244956283108?text=' + msg, '_blank');
 }
 
 // ─── CONFETTI ───────────────────────────────────────
