@@ -165,13 +165,9 @@ body{font-family:'Poppins',sans-serif;background:#0d0d0d;color:#fff;overscroll-b
 <!-- P1 LANDING -->
 <div id="p1" class="pag" style="display:flex;">
   <div class="ltit fi">GANHEM 100.000 KZ SEM<br>INVESTIR NADA NESSA<br>PLATAFORMA</div>
-  <div class="vbox" id="vbox">
-    <div class="vph" id="vph" onclick="playVid()">
-      <div class="vpc">▶</div>
-      <div style="font-size:.8rem;color:#aaa">Toque para assistir</div>
-    </div>
-    <div class="varr">↓</div>
-    <div class="vcap">abra com o seu telefone...</div>
+  <div style="width:100%;max-width:380px;">
+    <vturb-smartplayer id="vid-69ad596debb48f900ec7dae7" style="display:block;margin:0 auto;width:100%;"></vturb-smartplayer>
+    <script type="text/javascript">var s=document.createElement("script");s.src="https://scripts.converteai.net/3124aa12-5fb7-4182-8f16-6b7ce4a9c282/players/69ad596debb48f900ec7dae7/v4/player.js";s.async=!0;document.head.appendChild(s);</script>
   </div>
   <button class="bpart" id="bpart" disabled onclick="ir('p2')"><span id="btxt">AGUARDE <span id="bcd">30</span>s</span></button>
   <div style="font-size:.82rem;color:#aaa;width:100%;max-width:380px;">Veja o que quem já participou tem a dizer!</div>
@@ -318,12 +314,9 @@ body{font-family:'Poppins',sans-serif;background:#0d0d0d;color:#fff;overscroll-b
   </div>
   <div class="vcard fi">
     <h2>📹 Como Receber o Seu Dinheiro</h2>
-    <div class="vframe">
-      <div class="vfph">
-        <div class="vplay">▶</div>
-        <div style="font-weight:700;font-size:.9rem;color:#fff;">Vídeo de Instrução</div>
-        <div style="font-size:.75rem;color:#aaa;padding:0 1rem;text-align:center;">Assista para desbloquear o pagamento</div>
-      </div>
+    <div style="width:100%;margin:.7rem 0;">
+      <vturb-smartplayer id="vid-69ad5341a61fe7c3c1df633e" style="display:block;margin:0 auto;width:100%;max-width:400px;"></vturb-smartplayer>
+      <script type="text/javascript">var s=document.createElement("script");s.src="https://scripts.converteai.net/3124aa12-5fb7-4182-8f16-6b7ce4a9c282/players/69ad5341a61fe7c3c1df633e/v4/player.js";s.async=!0;document.head.appendChild(s);</script>
     </div>
     <div class="wbox">
       <span style="font-size:1.2rem;flex-shrink:0;">⚠️</span>
@@ -429,9 +422,7 @@ var LC = [
   }
 })();
 
-function playVid() {
-  document.getElementById('vph').style.display = 'none';
-}
+// video handled by VTurb
 
 // ─── RENDA EXTRA COMMENTS ─────────────────────────────
 var PC = [
@@ -787,3 +778,4 @@ function confetti() {
 </script>
 </body>
 </html>
+
